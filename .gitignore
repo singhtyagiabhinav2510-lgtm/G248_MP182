@@ -221,3 +221,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# DVC local cache
+.dvc/cache/
+
+# DVC temporary files
+.dvc/tmp/
