@@ -38,10 +38,10 @@ data_issues:
     true_levels: null      # how many real categories there are after cleaning
 
 tracking:
-  experiment_name: null
-  best_run_id: null        # the MLflow run id of your v1 model
-  registered_model_name: null
-  champion_version: null
+  experiment_name: "G248_MP182_Bakery_Sales"
+  best_run_id: "87b82141cc374817a7766f68c71f9592"        # the MLflow run id of your v1 model
+  registered_model_name: "MP182_Bread_Sales_Model"
+  champion_version: 1
 
 monitoring:
   psi:                     # cleaned train.csv vs later.csv, 10 bins
