@@ -1,0 +1,28 @@
+data:
+  raw_train_path: "data/raw/train.csv"
+  raw_later_path: "data/raw/later.csv"
+
+preprocessing:
+  target_typo_threshold: 1000
+  target_typo_divisor: 10.0
+  features:
+    numerical:
+      - price_rs
+      - temp_c
+      - footfall_index
+      - competitor_shops
+      - shelf_hours
+      - orders_previous_day
+    categorical:
+      - day_type
+      - outlet
+  target: loaves_sold
+
+train:
+  random_state: 42
+  test_size: 0.2
+
+tracking:
+  experiment_name: "G248_MP182_Bakery_Sales"
+  registered_model_name: "MP182_Bread_Sales_Model"
+  model_output_path: "models/model.joblib"
