@@ -227,3 +227,6 @@ __marimo__/
 
 # DVC temporary files
 .dvc/tmp/
+
+mlruns/
+mlartifacts/
