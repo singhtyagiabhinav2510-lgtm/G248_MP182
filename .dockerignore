@@ -1,0 +1,13 @@
+
+.git
+.github
+.venv
+__pycache__
+.pytest_cache
+.dvc
+mlruns
+mlartifacts
+mlflow.db
+data/
+tests/
+.ipynb_checkpoints
