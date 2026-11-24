@@ -45,18 +45,18 @@ tracking:
 
 monitoring:
   psi:                     # cleaned train.csv vs later.csv, 10 bins
-    price_rs: null
-    temp_c: null
-    footfall_index: null
-    competitor_shops: null
-    shelf_hours: null
-    orders_previous_day: null
-  most_drifted_feature: null
+    price_rs: 0.06477710835507015
+    temp_c: 0.05810492915479798
+    footfall_index: 0.04465200461828492
+    competitor_shops: 0.01762511013331563
+    shelf_hours: 0.04370434010204696
+    orders_previous_day: 5.264079715093115
+  most_drifted_feature: orders_previous_day
   mae_by_group:            # v1 on later.csv, per value of outlet
-    'Station Road': null
-    'Mall Road': null
-    'College Gate': null
-  worst_served_group: null
-  mae_v1_on_check: null    # v1 on the last 30% of later.csv (by date)
-  mae_v2_on_check: null    # v2 on the same rows
-  decision: null           # promote or keep
+    'College Gate': 32.67097370650551
+    'Mall Road': 33.46836434881311
+    'Station Road': 145.07143202336846
+  worst_served_group: Station Road
+  mae_v1_on_check: 65.31264747957682    # v1 on the last 30% of later.csv (by date)
+  mae_v2_on_check: 43.484853650506125    # v2 on the same rows
+  decision: promote           # promote or keep
