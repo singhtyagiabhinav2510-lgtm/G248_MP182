@@ -37,21 +37,3 @@ FastAPI
 Docker
 GitHub Actions
 Kubernetes
-
-## Stage 4 — Monitoring and Retraining
-
-Run the Stage 4 workflow with Python 3.12:
-
-```bash
-python3.12 -m src.bakery_sales.monitor
-```
-
-The workflow cleans training and later data using the existing preprocessing convention, calculates 10-bin PSI for the six numerical features, evaluates v1 separately for College Gate, Mall Road, and Station Road, sorts `later.csv` chronologically, retrains Ridge v2 on cleaned train data plus the first 210 later rows, and evaluates v1 and v2 on the final 90 rows.
-
-V2 is promoted to the `champion` MLflow alias only when `MAE_v2 <= 0.85 * MAE_v1`. The workflow predicts all 250 holdout records and writes `predictions/holdout_predictions.csv` with exactly `record_id,prediction` columns.
-
-Run all tests with:
-
-```bash
-python3.12 -m pytest -v
-```
