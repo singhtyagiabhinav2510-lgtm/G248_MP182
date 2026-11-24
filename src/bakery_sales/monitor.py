@@ -74,16 +74,41 @@ def build_pipeline(num_features: list[str], cat_features: list[str]) -> Pipeline
     )
 
 
-def update_monitoring_findings(path: Path, monitoring: dict) -> None:
+def update_monitoring_findings(
+    path: Path,
+    monitoring: dict,
+    champion_version: int,
+) -> None:
     text = path.read_text(encoding="utf-8")
+
+    findings_marker = "\ntracking:\n"
+    monitoring_marker = "\nmonitoring:\n"
+    if findings_marker not in text or monitoring_marker not in text:
+        raise ValueError("findings.yaml does not contain tracking and monitoring sections")
+
+    prefix = text.split(monitoring_marker, 1)[0]
+    tracking_text = prefix.split(findings_marker, 1)[1]
+
+    tracking_lines = tracking_text.splitlines()
+    for index, line in enumerate(tracking_lines):
+        if line.strip().startswith("champion_version:"):
+            indentation = line[: len(line) - len(line.lstrip())]
+            tracking_lines[index] = f"{indentation}champion_version: {champion_version}"
+            break
+
+    prefix = prefix.split(findings_marker, 1)[0]
+    tracking_section = findings_marker.lstrip("\n") + "\n" + "\n".join(tracking_lines)
     monitoring_yaml = yaml.safe_dump({"monitoring": monitoring}, sort_keys=False).rstrip()
 
-    marker = "\nmonitoring:\n"
-    if marker not in text:
-        raise ValueError("findings.yaml does not contain a monitoring section")
-
-    prefix = text.split(marker, 1)[0].rstrip()
-    path.write_text(prefix + "\n\n" + monitoring_yaml + "\n", encoding="utf-8")
+    path.write_text(
+        prefix.rstrip()
+        + "\n\n"
+        + tracking_section
+        + "\n\n"
+        + monitoring_yaml
+        + "\n",
+        encoding="utf-8",
+    )
 
 
 def main() -> dict:
@@ -205,7 +230,7 @@ def main() -> dict:
         "mae_v2_on_check": mae_v2_check,
         "decision": "promote" if promote else "keep",
     }
-    update_monitoring_findings(root / "findings.yaml", monitoring)
+    update_monitoring_findings(root / "findings.yaml", monitoring, champion_version)
 
     return {
         **monitoring,

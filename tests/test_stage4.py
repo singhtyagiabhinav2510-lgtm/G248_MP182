@@ -1,7 +1,10 @@
 import pandas as pd
 import pytest
+import yaml
 
-from src.bakery_sales.monitor import compute_psi
+from pathlib import Path
+
+from src.bakery_sales.monitor import compute_psi, load_v1_model
 
 
 def test_compute_psi_identical_distributions_is_zero():
@@ -29,3 +32,17 @@ def test_holdout_predictions_shape_and_columns():
     assert len(predictions) == len(holdout) == 250
     assert predictions["record_id"].tolist() == holdout["record_id"].tolist()
     assert predictions["prediction"].notna().all()
+
+
+def test_existing_v1_artifact_loads():
+    root = Path(__file__).resolve().parents[1]
+    v1 = load_v1_model(root / "mlruns")
+    assert hasattr(v1, "predict")
+
+
+def test_findings_champion_version_matches_promotion():
+    with open("findings.yaml", encoding="utf-8") as handle:
+        findings = yaml.safe_load(handle)
+
+    assert findings["monitoring"]["decision"] == "promote"
+    assert findings["tracking"]["champion_version"] == 2

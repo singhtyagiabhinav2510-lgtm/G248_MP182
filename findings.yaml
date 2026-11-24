@@ -41,7 +41,7 @@ tracking:
   experiment_name: "G248_MP182_Bakery_Sales"
   best_run_id: "87b82141cc374817a7766f68c71f9592"        # the MLflow run id of your v1 model
   registered_model_name: "MP182_Bread_Sales_Model"
-  champion_version: 1
+  champion_version: 2
 
 monitoring:
   psi:                     # cleaned train.csv vs later.csv, 10 bins
